@@ -166,18 +166,21 @@ int VirtualGroceriesStore::products() {
 }
 
 int VirtualGroceriesStore::categories() {
-    int choice = subMenu(MenuOption::USERS);
+    int choice = subMenu(MenuOption::CATEGORIES);
     while (true)
     {
         switch (choice)
         {
-            case 1: cout << "1" << endl; break;
-            case 2: cout << "2" << endl; break;
+            case 1: insertCategory(); break;
+            case 2: viewAllCategories(); break;
+            case 3: viewCategory(); break;
+            case 4: updateCategory(); break;
+            case 5: deleteCategory(); break;
             case -1: return 0;
             default: cout << "That is not a valid choice." << endl;
         }
         cout << "\n\n";
-        choice = subMenu(MenuOption::USERS);
+        choice = subMenu(MenuOption::CATEGORIES);
     }
 }
 
@@ -188,8 +191,11 @@ int VirtualGroceriesStore::users() {
     {
         switch (choice)
         {
-            case 1: cout << "1" << endl; break;
-            case 2: cout << "2" << endl; break;
+            case 1: insertUser(); break;
+            case 2: viewAllUsers(); break;
+            case 3: viewUser(); break;
+            case 4: updateUser(); break;
+            case 5: deleteUser(); break;
             case -1: return 0;
             default: cout << "That is not a valid choice." << endl;
         }
@@ -199,34 +205,40 @@ int VirtualGroceriesStore::users() {
 }
 
 int VirtualGroceriesStore::distributors() {
-    int choice = subMenu(MenuOption::USERS);
+    int choice = subMenu(MenuOption::DISTRIBUTOR);
     while (true)
     {
         switch (choice)
         {
-            case 1: cout << "1" << endl; break;
-            case 2: cout << "2" << endl; break;
+            case 1: insertDistributor(); break;
+            case 2: viewAllDistributors(); break;
+            case 3: viewDistributor(); break;
+            case 4: updateDistributor(); break;
+            case 5: deleteDistributor(); break;
             case -1: return 0;
             default: cout << "That is not a valid choice." << endl;
         }
         cout << "\n\n";
-        choice = subMenu(MenuOption::USERS);
+        choice = subMenu(MenuOption::DISTRIBUTOR);
     }
 }
 
 int VirtualGroceriesStore::orders() {
-    int choice = subMenu(MenuOption::USERS);
+    int choice = subMenu(MenuOption::ORDERS);
     while (true)
     {
         switch (choice)
         {
-            case 1: cout << "1" << endl; break;
-            case 2: cout << "2" << endl; break;
+            case 1: insertOrder(); break;
+            case 2: viewAllOrders(); break;
+            case 3: viewOrder(); break;
+            case 4: updateOrder(); break;
+            case 5: deleteOrder(); break;
             case -1: return 0;
             default: cout << "That is not a valid choice." << endl;
         }
         cout << "\n\n";
-        choice = subMenu(MenuOption::USERS);
+        choice = subMenu(MenuOption::ORDERS);
     }
 }
 
@@ -244,7 +256,7 @@ int VirtualGroceriesStore::orders() {
  */
 
 void VirtualGroceriesStore::insertProduct() {
-    string productProperties[5] = {"ID", "Name", "Price", "Distributor", "Weight"};
+    string productProperties[5] = {"Name", "Price", "Weight"};
     map<string, string> productInfo;
     for (auto &i : productProperties) {
         printf("\nEnter product-%s: ", i.c_str());
@@ -445,23 +457,83 @@ void VirtualGroceriesStore::deleteProduct(int ID) {
  */
 
 void VirtualGroceriesStore::insertCategory() {
-    
+    string categoryProperties[1] = {"Name"};
+    map<string, string> categoryInfo;
+    for (auto &i : categoryProperties) {
+        printf("\nEnter category-%s: ", i.c_str());
+        cin >> categoryInfo[i];
+    }
 }
 
 void VirtualGroceriesStore::viewAllCategories() {
-    
+    Category* categories = getAllCategories();
+    delete[] categories;
 }
 
 void VirtualGroceriesStore::viewCategory() {
-    
+    int ID;
+    printf("\nEnter category ID: ");
+    cin >> ID;
+    Category category = getCategoryByID(ID);
 }
 
 void VirtualGroceriesStore::updateCategory() {
+    int i = 1, choice;
+    cout << left;
+    printf("Select a category to update\n");
+    Category* categories = getAllCategories();
+        do
+    {
+        if (!cin)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        printf("Enter choice: ");
+        cin >> choice;
+        if (!cin || choice < 1 || choice > i)
+            cout << "That is not a valid choice! Try Again!" << endl;
+    } while (!cin);
     
+    choice--;
+    Category selectedCategory = categories[choice];
+    string categoryProperties[1] = {"Name"};
+    map<string, string> categoryInfo;
+    
+    for (auto &i : categoryProperties) {
+        printf("\nEnter new product-%s: ", i.c_str());
+        cin >> categoryInfo[i];
+    }
+    
+    Category updatedCategory = Category();
+    updatedCategory.ID = selectedCategory.ID;
+    updatedCategory.name = categoryInfo[categoryProperties[0]];
+    updateCategory(updatedCategory);
+    delete[] categories;
 }
 
 void VirtualGroceriesStore::deleteCategory() {
+    int i = 1, choice;
+    cout << left;
+    printf("Select a product to delete\n");
+    Category* categories = getAllCategories();
+        do
+    {
+        if (!cin)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        printf("Enter choice: ");
+        cin >> choice;
+        if (!cin || choice < 1 || choice > i)
+            cout << "That is not a valid choice! Try Again!" << endl;
+    } while (!cin);
     
+    choice--;
+    Category selectedCategory = categories[choice];
+    deleteCategory(selectedCategory.ID);
+    delete[] categories;
 }
 
 void VirtualGroceriesStore::insertCategory(Category category) {
@@ -470,14 +542,97 @@ void VirtualGroceriesStore::insertCategory(Category category) {
 
 Category* VirtualGroceriesStore::getAllCategories() {
     Category* categories = new Category[5];
+    string query = "SELECT * FROM Category;";
+    string errorMsg;
+    int count = 0;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        while (sqlite3_step(pRes) == SQLITE_ROW)
+        {
+            cout  << count + 1 << ". " << sqlite3_column_text(pRes, 1);
+            cout << endl;
+            Category category = Category();
+            category.ID = sqlite3_column_int(pRes, 0);
+            category.name = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 1));
+            categories[count] = category;
+            count++;
+        }
+        
+        sqlite3_reset(pRes);
+    }
     return categories;
 }
 
 Category VirtualGroceriesStore::getCategoryByID(int ID) {
     Category category = Category();
+    string query = "SELECT *"\
+    "FROM Category "\
+    "WHERE Category.categoryID=" + to_string(ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        while (sqlite3_step(pRes) == SQLITE_ROW)
+        {
+            cout  << 1 << ". " << sqlite3_column_text(pRes, 1);
+            cout << endl;
+            category.ID = sqlite3_column_int(pRes, 0);
+            category.name = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 1));
+           
+        }
+        
+        sqlite3_reset(pRes);
+    }
     return category;
 }
 
+void VirtualGroceriesStore::updateCategory(Category category) {
+    string query = "UPDATE Category "\
+    "SET name=" + category.name + " "\
+    "WHERE Category.category=" + to_string(category.ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        printf("Deleted product with ID: %i\n", category.ID);
+    }
+}
+void VirtualGroceriesStore::deleteCategory(int ID){
+    string query = "DELETE "\
+    "FROM Category "\
+    "WHERE Category.categoryID=" + to_string(ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        printf("Deleted category with ID: %i\n", ID);
+    }
+}
 
 //  User CRUD Functionality:
 /*
@@ -527,7 +682,21 @@ User VirtualGroceriesStore::getUserByID(int ID) {
     return user;
 }
 void VirtualGroceriesStore::deleteUser(int ID) {
-    
+    string query = "DELETE "\
+    "FROM User "\
+    "WHERE User.userID=" + to_string(ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        printf("Deleted category with ID: %i\n", ID);
+    }
 }
 //  Distributor CRUD Functionality:
 /*
@@ -577,7 +746,21 @@ Distributor VirtualGroceriesStore::getDistributorByID(int ID) {
 }
 
 void VirtualGroceriesStore::deleteDistributor(int ID){
-    
+    string query = "DELETE "\
+    "FROM Distributor "\
+    "WHERE Distributor.distributorID=" + to_string(ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        printf("Deleted category with ID: %i\n", ID);
+    }
 }
 
 //  Order CRUD Functionality:
@@ -628,5 +811,19 @@ Order VirtualGroceriesStore::getOrderByID(int ID) {
 }
 
 void VirtualGroceriesStore::deleteOrder(int ID){
-    
+    string query = "DELETE "\
+    "FROM Order "\
+    "WHERE Order.orderID=" + to_string(ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        printf("Deleted category with ID: %i\n", ID);
+    }
 }
