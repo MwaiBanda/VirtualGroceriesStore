@@ -21,8 +21,8 @@ int VirtualGroceriesStore::initMenu() {
             case 1: products(); break;
             case 2: categories(); break;
             case 3: users(); break;
-            case 4: orders(); break;
-            case 5: distributors(); break;
+            case 4: distributors(); break;
+            case 5: orders(); break;
             case -1: return 0;
             default: cout << "That is not a valid choice." << endl;
         }
@@ -68,12 +68,12 @@ int VirtualGroceriesStore::subMenu(MenuOption option) {
 }
 
 void VirtualGroceriesStore::printMainMenuOptions() {
-    cout << "Welcome to the Please choose an option (enter -1 to quit):  " << endl;
+    cout << "Welcome to Virtual Groceries DB Data, choose an option (enter -1 to quit):  " << endl;
     cout << "1. Products" << endl;
     cout << "2. Categories" << endl;
     cout << "3. Users" << endl;
-    cout << "4. Orders" << endl;
-    cout << "5. Distributors" << endl;
+    cout << "4. Distributors" << endl;
+    cout << "5. Orders" << endl;
     cout << "Enter Choice: ";
 }
 void VirtualGroceriesStore::productMenuOptions() {
@@ -431,6 +431,18 @@ void VirtualGroceriesStore::deleteProduct(int ID) {
         printf("Deleted product with ID: %i\n", ID);
     }
 }
+//  Category CRUD Functionality:
+/*
+    CREATE:
+        void insertCategory(Category category);
+    READ:
+        Category* getAllCategories();
+        Category getCategoryByID(int ID);
+    UPADATE:
+        void updateCategory(Category category);;
+    DELETE:
+        void deleteCategory(int ID);
+ */
 
 void VirtualGroceriesStore::insertCategory() {
     
@@ -464,4 +476,157 @@ Category* VirtualGroceriesStore::getAllCategories() {
 Category VirtualGroceriesStore::getCategoryByID(int ID) {
     Category category = Category();
     return category;
+}
+
+
+//  User CRUD Functionality:
+/*
+    CREATE:
+        void insertUser(User user);
+    READ:
+        User* getAllUsers();
+        User getUserByID(int ID);
+    UPADATE:
+        void updateUser(User user);
+    DELETE:
+        void deleteUser(int ID);
+ */
+
+
+void VirtualGroceriesStore::insertUser() {
+    
+}
+
+void VirtualGroceriesStore::viewAllUsers() {
+    
+}
+
+void VirtualGroceriesStore::viewUser() {
+    
+}
+
+void VirtualGroceriesStore::updateUser() {
+    
+}
+
+void VirtualGroceriesStore::deleteUser() {
+    
+}
+
+void VirtualGroceriesStore::insertUser(User user) {
+    
+}
+
+User* VirtualGroceriesStore::getAllUsers() {
+    User* user = new User[5];
+    return user;
+}
+
+User VirtualGroceriesStore::getUserByID(int ID) {
+    User user = User();
+    return user;
+}
+void VirtualGroceriesStore::deleteUser(int ID) {
+    
+}
+//  Distributor CRUD Functionality:
+/*
+    CREATE:
+        void insertDistributor(Distributor distributor);
+    READ:
+        Distributor* getAllDistributor();
+        Distributor getDistributorByID(int ID);
+    UPADATE:
+        void updateDistributor(User user);
+    DELETE:
+        void deleteDistributor(int ID);
+ */
+
+void VirtualGroceriesStore::insertDistributor() {
+    
+}
+
+void VirtualGroceriesStore::viewAllDistributors() {
+    
+}
+
+void VirtualGroceriesStore::viewDistributor() {
+    
+}
+
+void VirtualGroceriesStore::updateDistributor() {
+    
+}
+
+void VirtualGroceriesStore::deleteDistributor() {
+    
+}
+
+void VirtualGroceriesStore::insertDistributor(Distributor distributor) {
+    
+}
+
+Distributor* VirtualGroceriesStore::getAllDistributors() {
+    Distributor* distributors = new Distributor[5];
+    return distributors;
+}
+
+Distributor VirtualGroceriesStore::getDistributorByID(int ID) {
+    Distributor distributor = Distributor();
+    return distributor;
+}
+
+void VirtualGroceriesStore::deleteDistributor(int ID){
+    
+}
+
+//  Order CRUD Functionality:
+/*
+    CREATE:
+        void insertUser(User user);
+    READ:
+        Order* getAllUsers();
+        Order getUserByID(int ID);
+    UPADATE:
+        void updateOrder(Order order);
+    DELETE:
+        void deleteOrder(int ID);
+ */
+
+void VirtualGroceriesStore::insertOrder() {
+    
+}
+
+void VirtualGroceriesStore::viewAllOrders() {
+    
+}
+
+void VirtualGroceriesStore::viewOrder() {
+    
+}
+
+void VirtualGroceriesStore::updateOrder() {
+    
+}
+
+void VirtualGroceriesStore::deleteOrder() {
+    
+}
+
+void VirtualGroceriesStore::insertOrder(Order order) {
+    
+}
+
+Order* VirtualGroceriesStore::getAllOrders() {
+    Order* distributors = new Order[5];
+    return distributors;
+}
+
+Order VirtualGroceriesStore::getOrderByID(int ID) {
+    Order order = Order();
+    return order;
+}
+
+void VirtualGroceriesStore::deleteOrder(int ID){
+    
 }

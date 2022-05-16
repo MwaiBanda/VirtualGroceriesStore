@@ -17,6 +17,10 @@
 /* Models */
 #include "Product.h"
 #include "Category.h"
+#include "Distributor.h"
+/* Order & User Models because an Order contains a User thus imports User */
+#include "Order.h"
+
 
 using namespace std;
 
@@ -52,7 +56,6 @@ private:
     int categories();
     int users();
     int distributors();
-    
     int orders();
     
     //  Product CRUD Functionality:
@@ -103,6 +106,77 @@ private:
     void updateCategory(Category category);
     void deleteCategory(int ID);
     
-};
+    //  User CRUD Functionality:
+    /*
+        CREATE:
+            void insertUser(User user);
+        READ:
+            User* getAllUsers();
+            User getUserByID(int ID);
+        UPADATE:
+            void updateUser(User user);
+        DELETE:
+            void deleteUser(int ID);
+     */
+    void insertUser();
+    void viewAllUsers();
+    void viewUser();
+    void updateUser();
+    void deleteUser();
 
+    void insertUser(User user);
+    User* getAllUsers();
+    User getUserByID(int ID);
+    void updateUser(User user);
+    void deleteUser(int ID);
+    
+    //  Distributor CRUD Functionality:
+    /*
+        CREATE:
+            void insertDistributor(Distributor distributor);
+        READ:
+            Distributor* getAllDistributor();
+            Distributor getDistributorByID(int ID);
+        UPADATE:
+            void updateDistributor(User user);
+        DELETE:
+            void deleteDistributor(int ID);
+     */
+    void insertDistributor();
+    void viewAllDistributors();
+    void viewDistributor();
+    void updateDistributor();
+    void deleteDistributor();
+
+    void insertDistributor(Distributor distributor);
+    Distributor* getAllDistributors();
+    Distributor getDistributorByID(int ID);
+    void updateDistributor(User user);
+    void deleteDistributor(int ID);
+    
+    //  Order CRUD Functionality:
+    /*
+        CREATE:
+            void insertUser(User user);
+        READ:
+            Order* getAllUsers();
+            Order getUserByID(int ID);
+        UPADATE:
+            void updateOrder(Order order);
+        DELETE:
+            void deleteOrder(int ID);
+     */
+    void insertOrder();
+    void viewAllOrders();
+    void viewOrder();
+    void updateOrder();
+    void deleteOrder();
+
+    void insertOrder(Order order);
+    Order* getAllOrders();
+    Order getOrderByID(int ID);
+    void updateOrder(Order order);
+    void deleteOrder(int ID);
+};
+    
 #endif /* VirtualGroceriesStore_hpp */
