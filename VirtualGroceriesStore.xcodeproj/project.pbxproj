@@ -32,6 +32,7 @@
 		81624E8C2831C9B8008BBBE3 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		81624E8E2831CBF5008BBBE3 /* Product.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
 		81624E8F2831EC11008BBBE3 /* virtualgroceries.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = virtualgroceries.db; sourceTree = "<group>"; };
+		81624E902832A2F0008BBBE3 /* Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				81624E8E2831CBF5008BBBE3 /* Product.h */,
+				81624E902832A2F0008BBBE3 /* Category.h */,
 			);
 			path = models;
 			sourceTree = "<group>";

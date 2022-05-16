@@ -20,8 +20,8 @@ int VirtualGroceriesStore::initMenu() {
         {
             case 1: products(); break;
             case 2: categories(); break;
-            case 3: orders(); break;
-            case 4: users(); break;
+            case 3: users(); break;
+            case 4: orders(); break;
             case 5: distributors(); break;
             case -1: return 0;
             default: cout << "That is not a valid choice." << endl;
@@ -71,8 +71,8 @@ void VirtualGroceriesStore::printMainMenuOptions() {
     cout << "Welcome to the Please choose an option (enter -1 to quit):  " << endl;
     cout << "1. Products" << endl;
     cout << "2. Categories" << endl;
-    cout << "3. Orders" << endl;
-    cout << "4. Users" << endl;
+    cout << "3. Users" << endl;
+    cout << "4. Orders" << endl;
     cout << "5. Distributors" << endl;
     cout << "Enter Choice: ";
 }
@@ -88,37 +88,41 @@ void VirtualGroceriesStore::productMenuOptions() {
 
 void VirtualGroceriesStore::categoryMenuOptions() {
     cout << "\nPlease choose an option (enter -1 to go back):  " << endl;
-    cout << "1. View All Categories" << endl;
-    cout << "2. View Category" << endl;
-    cout << "3. Update Category" << endl;
-    cout << "4. Delete Category" << endl;
+    cout << "1. Insert Category " << endl;
+    cout << "2. View All Categories" << endl;
+    cout << "3. View Category" << endl;
+    cout << "4. Update Category" << endl;
+    cout << "5. Delete Category" << endl;
     cout << "Enter Choice: ";
 }
 
 void VirtualGroceriesStore::userMenuOptions() {
     cout << "\nPlease choose an option (enter -1 to go back):  " << endl;
-    cout << "1. View All Categories" << endl;
-    cout << "2. View Category" << endl;
-    cout << "3. Update Category" << endl;
-    cout << "4. Delete Category" << endl;
+    cout << "1. Insert User" << endl;
+    cout << "1. View All Users" << endl;
+    cout << "2. View Users" << endl;
+    cout << "3. Update Users" << endl;
+    cout << "4. Delete Users" << endl;
     cout << "Enter Choice: ";
 }
 
 void VirtualGroceriesStore::distributorMenuOptions() {
     cout << "\nPlease choose an option (enter -1 to go back):  " << endl;
-    cout << "1. View All Categories" << endl;
-    cout << "2. View Category" << endl;
-    cout << "3. Update Category" << endl;
-    cout << "4. Delete Category" << endl;
+    cout << "1. Insert Distributor" << endl;
+    cout << "1. View All Distributor" << endl;
+    cout << "2. View Distributor" << endl;
+    cout << "3. Update Distributor" << endl;
+    cout << "4. Delete Distributor" << endl;
     cout << "Enter Choice: ";
 }
 
 void VirtualGroceriesStore::orderMenuOptions() {
     cout << "\nPlease choose an option (enter -1 to go back):  " << endl;
-    cout << "1. View All Categories" << endl;
-    cout << "2. View Category" << endl;
-    cout << "3. Update Category" << endl;
-    cout << "4. Delete Category" << endl;
+    cout << "1. Insert Order" << endl;
+    cout << "1. View All Orders" << endl;
+    cout << "2. View Order" << endl;
+    cout << "3. Update Order" << endl;
+    cout << "4. Delete Order" << endl;
     cout << "Enter Choice: ";
 }
 
@@ -226,6 +230,18 @@ int VirtualGroceriesStore::orders() {
     }
 }
 
+//  Product CRUD Functionality:
+/*
+    CREATE:
+        void insertProduct(Product product);
+    READ:
+        Product* getAllProducts();
+        Product getProductByID(int ID);
+    UPADATE:
+        void updateProduct(Product product);
+    DELETE:
+        void deleteProduct(int ID);
+ */
 
 void VirtualGroceriesStore::insertProduct() {
     string productProperties[5] = {"ID", "Name", "Price", "Distributor", "Weight"};
@@ -287,7 +303,27 @@ void VirtualGroceriesStore::updateProduct() {
     delete[] products;
 }
 void VirtualGroceriesStore::deleteProduct() {
+    int i = 1, choice;
+    cout << left;
+    printf("Select a product to delete\n");
+    Product* products = getAllProducts();
+        do
+    {
+        if (!cin)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        printf("Enter choice: ");
+        cin >> choice;
+        if (!cin || choice < 1 || choice > i)
+            cout << "That is not a valid choice! Try Again!" << endl;
+    } while (!cin);
     
+    choice--;
+    Product selectedProduct = products[choice];
+    deleteProduct(selectedProduct.ID);
+    delete[] products;
 }
 
 Product* VirtualGroceriesStore::getAllProducts(){
@@ -394,4 +430,38 @@ void VirtualGroceriesStore::deleteProduct(int ID) {
         cout << endl;
         printf("Deleted product with ID: %i\n", ID);
     }
+}
+
+void VirtualGroceriesStore::insertCategory() {
+    
+}
+
+void VirtualGroceriesStore::viewAllCategories() {
+    
+}
+
+void VirtualGroceriesStore::viewCategory() {
+    
+}
+
+void VirtualGroceriesStore::updateCategory() {
+    
+}
+
+void VirtualGroceriesStore::deleteCategory() {
+    
+}
+
+void VirtualGroceriesStore::insertCategory(Category category) {
+    
+}
+
+Category* VirtualGroceriesStore::getAllCategories() {
+    Category* categories = new Category[5];
+    return categories;
+}
+
+Category VirtualGroceriesStore::getCategoryByID(int ID) {
+    Category category = Category();
+    return category;
 }

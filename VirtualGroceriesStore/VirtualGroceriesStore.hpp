@@ -14,7 +14,9 @@
 #include <list>
 #include <map>
 
+/* Models */
 #include "Product.h"
+#include "Category.h"
 
 using namespace std;
 
@@ -50,8 +52,21 @@ private:
     int categories();
     int users();
     int distributors();
+    
     int orders();
     
+    //  Product CRUD Functionality:
+    /*
+        CREATE:
+            void insertProduct(Product product);
+        READ:
+            Product* getAllProducts();
+            Product getProductByID(int ID);
+        UPADATE:
+            void updateProduct(Product product);
+        DELETE:
+            void deleteProduct(int ID);
+     */
     void insertProduct();
     void viewAllProducts();
     void viewProduct();
@@ -64,6 +79,29 @@ private:
     void updateProduct(Product product);
     void deleteProduct(int ID);
     
+    //  Category CRUD Functionality:
+    /*
+        CREATE:
+            void insertCategory(Category category);
+        READ:
+            Category* getAllCategories();
+            Category getCategoryByID(int ID);
+        UPADATE:
+            void updateCategory(Category category);;
+        DELETE:
+            void deleteCategory(int ID);
+     */
+    void insertCategory();
+    void viewAllCategories();
+    void viewCategory();
+    void updateCategory();
+    void deleteCategory();
+
+    void insertCategory(Category category);
+    Category* getAllCategories();
+    Category getCategoryByID(int ID);
+    void updateCategory(Category category);
+    void deleteCategory(int ID);
     
 };
 
