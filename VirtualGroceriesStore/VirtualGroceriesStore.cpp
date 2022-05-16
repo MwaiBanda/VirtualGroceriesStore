@@ -649,37 +649,167 @@ void VirtualGroceriesStore::deleteCategory(int ID){
 
 
 void VirtualGroceriesStore::insertUser() {
-    
+    string userProperties[3] = {"username", "first-name", "last-name"};
+    map<string, string> userInfo;
+    for (auto &i : userProperties) {
+        printf("\nEnter user-%s: ", i.c_str());
+        cin >> userInfo[i];
+    }
+    User newUser = User();
+    newUser.userName = userInfo[userProperties[0]];
+    newUser.firstName = userInfo[userProperties[1]];
+    newUser.lastName = userInfo[userProperties[2]];
+    insertUser(newUser);
 }
 
 void VirtualGroceriesStore::viewAllUsers() {
-    
+    User* users = getAllUsers();
+    delete[] users;
 }
 
 void VirtualGroceriesStore::viewUser() {
-    
+    int ID;
+    printf("\nEnter user ID: ");
+    cin >> ID;
+    User user = getUserByID(ID);
 }
 
 void VirtualGroceriesStore::updateUser() {
+    int i = 1, choice;
+    cout << left;
+    printf("Select a category to update\n");
+    User* users = getAllUsers();
+        do
+    {
+        if (!cin)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        printf("Enter choice: ");
+        cin >> choice;
+        if (!cin || choice < 1 || choice > i)
+            cout << "That is not a valid choice! Try Again!" << endl;
+    } while (!cin);
     
+    choice--;
+    User selectedUser = users[choice];
+    string userProperties[3] = {"Username", "firstName", "lastName"};
+    map<string, string> userInfo;
+    
+    for (auto &i : userProperties) {
+        printf("\nEnter new product-%s: ", i.c_str());
+        cin >> userInfo[i];
+    }
+    
+    User updatedUser = User();
+    updatedUser.ID = selectedUser.ID;
+    updatedUser.userName = userInfo[userProperties[0]];
+    updatedUser.firstName = userInfo[userProperties[1]];
+    updatedUser.lastName = userInfo[userProperties[2]];
+    updatedUser.creationDate = selectedUser.creationDate;
+
+    updateUser(updatedUser);
+    delete[] users;
 }
 
 void VirtualGroceriesStore::deleteUser() {
+    int i = 1, choice;
+    cout << left;
+    printf("Select a user to delete\n");
+    User* users = getAllUsers();
+    do
+    {
+        if (!cin)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        printf("Enter choice: ");
+        cin >> choice;
+        if (!cin || choice < 1 || choice > i)
+            cout << "That is not a valid choice! Try Again!" << endl;
+    } while (!cin);
     
+    choice--;
+    User selectedUser = users[choice];
+    deleteUser(selectedUser.ID);
 }
 
 void VirtualGroceriesStore::insertUser(User user) {
-    
+    string query = "INSERT INTO USER(username, creationDate, firstName, lastName) "\
+    "VALUES(" + user.userName + ",04/16/2022," + user.firstName + "," + user.userName + ");";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        printf("Created user with username: %s\n", user.userName.c_str());
+    }
 }
 
 User* VirtualGroceriesStore::getAllUsers() {
-    User* user = new User[5];
-    return user;
+    User* users = new User[5];
+    string query = "SELECT * FROM User;";
+    string errorMsg;
+    int count = 0;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK) {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    } else {
+        cout << endl;
+        while (sqlite3_step(pRes) == SQLITE_ROW) {
+            cout  << count + 1 << ". " << sqlite3_column_text(pRes, 1);
+            cout << endl;
+            User user = User();
+            user.ID = sqlite3_column_int(pRes, 0);
+            user.userName = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 1));
+            user.creationDate = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 2));
+            user.firstName = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 3));
+            user.lastName = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 4));
+            users[count] = user;
+            count++;
+        }
+        
+        sqlite3_reset(pRes);
+    }
+    return users;
 }
 
 User VirtualGroceriesStore::getUserByID(int ID) {
     User user = User();
+    string query = "SELECT * "\
+    "FROM User "\
+    "WHERE User.userID=" + to_string(ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK) {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    } else {
+        cout << endl;
+        while (sqlite3_step(pRes) == SQLITE_ROW) {
+            cout  << 1 << ". " << sqlite3_column_text(pRes, 1);
+            cout << endl;
+            user.ID = sqlite3_column_int(pRes, 0);
+            user.userName = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 1));
+            user.creationDate = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 2));
+            user.firstName = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 3));
+            user.lastName = reinterpret_cast<const char*>(sqlite3_column_text(pRes, 4));
+        }
+        
+        sqlite3_reset(pRes);
+    }
     return user;
+}
+void VirtualGroceriesStore::updateUser(User user) {
+    
 }
 void VirtualGroceriesStore::deleteUser(int ID) {
     string query = "DELETE "\

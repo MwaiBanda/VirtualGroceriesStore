@@ -11,7 +11,7 @@
 
 struct User {
     int ID;
-    std::string name;
+    std::string userName;
     std::string creationDate;
     std::string firstName;
     std::string lastName;
