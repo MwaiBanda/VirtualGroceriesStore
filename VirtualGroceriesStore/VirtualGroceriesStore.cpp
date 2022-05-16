@@ -150,7 +150,8 @@ int VirtualGroceriesStore::products() {
             case 1: insertProduct(); break;
             case 2: viewAllProducts(); break;
             case 3: viewProduct(); break;
-            case 4: deleteProduct(); break;
+            case 4: updateProduct(); break;
+            case 5: deleteProduct(); break;
 
             case -1: return 0;
             default: cout << "That is not a valid choice." << endl;
@@ -247,7 +248,44 @@ void VirtualGroceriesStore::viewProduct() {
     cin >> ID;
     Product product = getProductByID(ID);
 }
+void VirtualGroceriesStore::updateProduct() {
 
+    int i = 1, choice;
+    cout << left;
+    printf("Select a product to update\n");
+    Product* products = getAllProducts();
+        do
+    {
+        if (!cin)
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        printf("Enter choice: ");
+        cin >> choice;
+        if (!cin || choice < 1 || choice > i)
+            cout << "That is not a valid choice! Try Again!" << endl;
+    } while (!cin);
+    
+    choice--;
+    Product selectedProduct = products[choice];
+    string productProperties[5] = {"Name", "Price", "Weight"};
+    map<string, string> productInfo;
+    
+    for (auto &i : productProperties) {
+        printf("\nEnter new product-%s: ", i.c_str());
+        cin >> productInfo[i];
+    }
+    
+    Product updatedProduct = Product();
+    updatedProduct.ID = selectedProduct.ID;
+    updatedProduct.name = productInfo[productProperties[0]];
+    updatedProduct.price = stod(productInfo[productProperties[1]]);
+    updatedProduct.distributor = selectedProduct.distributor;
+    updatedProduct.weight = stod(productInfo[productProperties[2]]);
+    updateProduct(updatedProduct);
+    delete[] products;
+}
 void VirtualGroceriesStore::deleteProduct() {
     
 }
@@ -322,8 +360,22 @@ Product VirtualGroceriesStore::getProductByID(int ID){
     return product;
 }
 
-void VirtualGroceriesStore::updateProductByID(int ID) {
-    
+void VirtualGroceriesStore::updateProduct(Product product) {
+    string query = "UPDATE Product "\
+    "SET name=" + product.name + ", price=" + to_string(product.ID) + ",  weight=" + to_string(product.weight) + " "\
+    "WHERE Product.productID=" + to_string(product.ID) + ";";
+    string errorMsg;
+    if (sqlite3_prepare_v2(db, query.c_str(), -1, &pRes, NULL) != SQLITE_OK)
+    {
+        errorMsg = sqlite3_errmsg(db);
+        sqlite3_finalize(pRes);
+        cout << "There was an error: " << errorMsg << endl;
+    }
+    else
+    {
+        cout << endl;
+        printf("Deleted product with ID: %i\n", product.ID);
+    }
 }
 
 void VirtualGroceriesStore::deleteProduct(int ID) {

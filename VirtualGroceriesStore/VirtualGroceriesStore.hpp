@@ -61,7 +61,7 @@ private:
     void insertProduct(Product product);
     Product* getAllProducts();
     Product getProductByID(int ID);
-    void updateProductByID(int ID);
+    void updateProduct(Product product);
     void deleteProduct(int ID);
     
     
