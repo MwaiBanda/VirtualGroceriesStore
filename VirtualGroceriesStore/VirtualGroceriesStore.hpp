@@ -11,6 +11,10 @@
 #include <stdio.h>
 #include <iostream>
 #include "sqlite3.h"
+#include <list>
+#include <map>
+
+#include "Product.h"
 
 using namespace std;
 
@@ -40,12 +44,27 @@ private:
     void categoryMenuOptions();
     void userMenuOptions();
     void distributorMenuOptions();
+    void orderMenuOptions();
     
     int products();
     int categories();
     int users();
     int distributors();
     int orders();
+    
+    void insertProduct();
+    void viewAllProducts();
+    void viewProduct();
+    void updateProduct();
+    void deleteProduct();
+
+    void insertProduct(Product product);
+    Product* getAllProducts();
+    Product getProductByID(int ID);
+    void updateProductByID(int ID);
+    void deleteProduct(int ID);
+    
+    
 };
 
 #endif /* VirtualGroceriesStore_hpp */

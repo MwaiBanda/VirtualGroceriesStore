@@ -12,7 +12,7 @@
 int main(int argc, const char * argv[]) {
     sqlite3 *db;
     int rc;
-    rc = sqlite3_open("/Users/mwaibanda/Repository/Main Projects/Command Line Projects/NBA-Store/NBA-Store/NBA.db", &db);
+    rc = sqlite3_open("/Users/mwaibanda/Repository/Main Projects/Data/virtualgroceries.db", &db);
     
     if( rc ) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
