@@ -12,7 +12,7 @@
 
 struct Order {
     int ID;
-    User user;
+    int userID;
     double total;
     std::string creationDate;
     std::string description;
