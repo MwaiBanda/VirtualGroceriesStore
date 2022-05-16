@@ -151,7 +151,7 @@ private:
     void insertDistributor(Distributor distributor);
     Distributor* getAllDistributors();
     Distributor getDistributorByID(int ID);
-    void updateDistributor(User user);
+    void updateDistributor(Distributor distributor);
     void deleteDistributor(int ID);
     
     //  Order CRUD Functionality:
