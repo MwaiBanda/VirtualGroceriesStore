@@ -3,7 +3,7 @@
 //  VirtualGroceriesStore
 //
 //  Created by Mwai Banda on 5/15/22.
-//
+//  Purpose: Products CRUD, Category CRUD, Distributor CRUD, Order CRUD & User CRUD
 
 #include <iostream>
 #include "sqlite3.h"

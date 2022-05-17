@@ -3,7 +3,7 @@
 //  VirtualGroceriesStore
 //
 //  Created by Mwai Banda on 5/15/22.
-//
+//  Purpose: Model Product
 
 #ifndef Product_h
 #define Product_h

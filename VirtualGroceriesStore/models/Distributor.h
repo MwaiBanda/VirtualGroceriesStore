@@ -3,7 +3,7 @@
 //  VirtualGroceriesStore
 //
 //  Created by Mwai Banda on 5/16/22.
-//
+//  Purpose: Model Distributor
 
 #ifndef Distributor_h
 #define Distributor_h

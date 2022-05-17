@@ -3,7 +3,7 @@
 //  VirtualGroceriesStore
 //
 //  Created by Mwai Banda on 5/15/22.
-//
+//  Purpose: Products CRUD, Category CRUD, Distributor CRUD, Order CRUD & USER CRUD
 
 #ifndef VirtualGroceriesStore_hpp
 #define VirtualGroceriesStore_hpp
@@ -18,9 +18,8 @@
 #include "Product.h"
 #include "Category.h"
 #include "Distributor.h"
-/* Order & User Models because an Order contains a User thus imports User */
 #include "Order.h"
-
+#include "User.h"
 
 using namespace std;
 
